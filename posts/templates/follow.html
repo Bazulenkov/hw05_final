@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %} Лента подписок {% endblock %}
+
+{% block content %}
+{% include "menu.html" with follow=True %}
+<h1> Лента подписок | {{ user }}</h1>
+
+{% include 'post_list.html' with page=page paginator=paginator %}
+{% endblock %}
