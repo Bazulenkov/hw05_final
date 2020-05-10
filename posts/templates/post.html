@@ -30,11 +30,11 @@
             <div class="btn-group ">
                 <a class="btn btn-sm text-muted" href="{% url 'post' post.author.username post.id %}" role="button">
                     {% if post.comment_post.count %}
-                    {{ post.comment_post.count }} комментариев
+                        {{ post.comment_post.count }} комментариев
                     {% else%}
-                    {% if comment != False %}
-                    Добавить комментарий
-                    {% endif %}
+                        {% if comment != False %}
+                            Добавить комментарий
+                        {% endif %}
                     {% endif %}
                 </a>
 

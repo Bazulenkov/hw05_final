@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}{% if not post %}Профиль пользователя{% else %}Просмотр записи{% endif %}{% endblock %}
+{% block title %}
+    {% if not post %}
+        Профиль пользователя
+    {% else %}
+        Просмотр записи
+    {% endif %}
+{% endblock %}
 {% block content %}
 <main role="main" class="container">
     <div class="row">
@@ -45,16 +51,15 @@
         </div>
         <div class="col-md-9">
             {% if not post%}
-            {% for post in page %}
-            {% include 'post.html' %}
-            {% endfor %}
-            {% if page.has_other_pages %}
-            {% include 'paginator.html' with items=page paginator=paginator %}
-            {% endif %}
+                {% for post in page %}
+                    {% include 'post.html' %}
+                {% endfor %}
+                {% if page.has_other_pages %}
+                    {% include 'paginator.html' with items=page paginator=paginator %}
+                {% endif %}
             {% else %}
-            {% include 'post.html' with comment=False %}
-            {% include 'comments.html' with items=comments form=comment_form %}
-
+                {% include 'post.html' with comment=False %}
+                {% include 'comments.html' with items=comments form=comment_form %}
             {% endif %}
         </div>
     </div>

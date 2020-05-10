@@ -1,9 +1,9 @@
 <!-- Вывод ленты записей -->
 {% for post in page %}
-{% include "post.html" with post=post %}
+    {% include "post.html" with post=post %}
 {% endfor %}
 
 <!-- Вывод паджинатора -->
 {% if page.has_other_pages %}
-{% include "paginator.html" with items=page paginator=paginator %}
+    {% include "paginator.html" with items=page paginator=paginator %}
 {% endif %}

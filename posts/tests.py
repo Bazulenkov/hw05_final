@@ -52,7 +52,7 @@ class TestHW04(TestCase):
         self.client.force_login(self.user)
         post = Post.objects.create(
             text="It's driving me crazy!", author=self.user)
-        response = self.client.post(
+        self.client.post(
             f'/{self.user.username}/{post.id}/edit/', {'text': 'text3'}, follow=True)
         url_list = ['', f'/{post.author.username}/',
                     f'/{post.author.username}/{post.id}/']
@@ -85,7 +85,8 @@ class TestSprint6(TestCase):
         self.assertContains(response, '<img')
 
     def test_post_with_image_display(self):
-        """ Проверяем, что на главной странице, на странице профайла и на странице группы пост с картинкой отображается корректно, с тегом <img> """
+        """ Проверяем, что на главной странице, на странице профайла и на странице группы пост с
+         картинкой отображается корректно, с тегом <img> """
         url_list = ['', f'/{self.post.author.username}/',
                     f'/group/{self.group.slug}/']
         cache.clear()
@@ -97,7 +98,7 @@ class TestSprint6(TestCase):
         """ Проверяем, что срабатывает защита от загрузки файлов не-графических форматов """
         self.client.force_login(self.user)
         count_posts = Post.objects.count()
-        with open('media/posts/1.html', 'rb') as img:
+        with open('yatube/settings.py', 'rb') as img:
             response = self.client.post(
                 '/new/', {'text': 'post with image', 'image': img})
         # Проверяем, что форма выдаст ошибку
@@ -114,19 +115,21 @@ class TestSprint6(TestCase):
         self.assertIn(html_cache, str(response.content.decode()))
 
     def test_follow(self):
-        """ Проверяем, что авторизованный пользователь может подписываться на других пользователей и удалять их из подписок """
+        """ Проверяем, что авторизованный пользователь может подписываться на других пользователей
+         и удалять их из подписок """
         user = User.objects.create_user(
             username="terminator", email="terminator@skynet.com", password="12345")
         self.client.force_login(user)
-        self.client.get(f'/{user.username}')
+
         self.client.get(f'/{self.user.username}/follow/')
         self.assertTrue(user.follower.filter(author=self.user).exists())
-        self.client.get(f'/{user.username}/unfollow/',
-                        {'username': user.username})
+        
+        self.client.get(f'/{user.username}/unfollow/',{'username': user.username})
         self.assertFalse(self.user.follower.filter(author=user).exists())
 
     def test_follow_index(self):
-        """ Проверяем, что новая запись пользователя появляется в ленте тех, кто на него подписан и не появляется в ленте тех, кто не подписан на него """
+        """ Проверяем, что новая запись пользователя появляется в ленте тех,
+         кто на него подписан и не появляется в ленте тех, кто не подписан на него """
         user = User.objects.create_user(
             username="terminator", email="terminator@skynet.com", password="12345")
         self.client.force_login(user)
@@ -148,7 +151,6 @@ class TestSprint6(TestCase):
             username="terminator", email="terminator@skynet.com", password="12345")
         # Проверяем, что авторизованный пользователь может комментировать
         self.client.force_login(user)
-        self.client.post(
-            f'/{self.user.username}/{self.post.id}/comment/', {'text': 'test_comment'})
+        self.client.post(f'/{self.user.username}/{self.post.id}/comment/', {'text': 'test_comment'})
         self.assertTrue(self.post.comment_post.filter(
             text='test_comment').exists())
