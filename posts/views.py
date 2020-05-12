@@ -8,7 +8,7 @@ from .models import Post, Group, Comment, Follow, User
 
 def index(request):
     """Обрабатывает главную страницу"""
-    post_list = Post.objects.order_by('-pub_date').all()
+    post_list = Post.objects.select_related('author').order_by('-pub_date').all()
     # показывать по 10 записей на странице.
     paginator = Paginator(post_list, 10)
     # переменная в URL с номером запрошенной страницы
@@ -21,7 +21,7 @@ def index(request):
 def group_posts(request, slug):
     """Обрабатывает страницу с группами"""
     group = get_object_or_404(Group, slug=slug)
-    posts = Post.objects.filter(group=group).order_by('-pub_date').all()
+    posts = Post.objects.select_related('author').filter(group=group).order_by('-pub_date').all()
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
