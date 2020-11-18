@@ -20,7 +20,7 @@
 Если вы используете `Python 3`, у вас уже должен быть модуль [venv](https://docs.python.org/3/library/venv.html), установленный в стандартной библиотеке.
 
 - Создайте на своем компютере папку проекта blog `mkdir blog` и перейдите в нее `cd blog`
-- Склонируйте этот репозиторий в текущую папку `git clone https://github.com/Bazulenkov/hw05_final .`
+- Склонируйте этот репозиторий в текущую папку `git clone https://github.com/Bazulenkov/hw05_final'.
 - Создайте виртуальное окружение `python3 -m venv venv`
 - Активируйте виртуальное окружение `source venv/bin/activate`
 - Установите зависимости `pip install -r requirements.txt`
