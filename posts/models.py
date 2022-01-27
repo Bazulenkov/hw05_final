@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-User = get_user_model()  # noqa
+User = get_user_model()
 
 
 class Group(models.Model):
-    """ Модель группы постов """
+    """Модель группы постов"""
 
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=50, unique=True)
@@ -17,7 +17,7 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    """ Модель записи/поста """
+    """Модель записи/поста"""
 
     text = models.TextField(help_text=_("Post's content"))
     pub_date = models.DateTimeField(
@@ -27,7 +27,11 @@ class Post(models.Model):
         User, on_delete=models.CASCADE, related_name="post_author"
     )
     group = models.ForeignKey(
-        Group, models.SET_NULL, blank=True, null=True, related_name="post_group"
+        Group,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="post_group",
     )
     image = models.ImageField(upload_to="posts/", blank=True, null=True)
 
@@ -36,7 +40,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    """ Модель комментария """
+    """Модель комментария"""
 
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, related_name="comment_post"
@@ -52,10 +56,14 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    """ Модель подписки на авторов """
+    """Модель подписки на авторов"""
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="follower"
+    )
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="following"
+    )
 
     class Meta:
         unique_together = ["user", "author"]
