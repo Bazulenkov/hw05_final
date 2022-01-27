@@ -24,7 +24,7 @@
 - Создайте виртуальное окружение `python3 -m venv venv`
 - Активируйте виртуальное окружение `source venv/bin/activate`
 - Установите зависимости `pip install -r requirements.txt`
-- Накатите миграции `python manage.py migrate`
+- Примените миграции `python manage.py migrate`
 - Создайте суперпользователя Django `python manage.py createsuperuser --username admin --email 'admin@example.com'`
 - Запустите сервер разработки Django `python manage.py runserver`
 
